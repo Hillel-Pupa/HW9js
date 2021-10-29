@@ -1,0 +1,15 @@
+body {
+  font-size: 20px;
+}
+
+header {
+  font-size: 40px;
+}
+
+li {
+  list-style-type: none;
+}
+
+li:hover {
+  color: #abb7f0;
+}
