@@ -35,6 +35,7 @@ window.addEventListener("hashchange", (event) => {
   const selectedCategory = location.hash.slice(1);
   const selectedProducts = products[selectedCategory];
   renderProducts(selectedProducts);
+  productInformation.replaceChildren();
 });
 
 function selectProduct(selectedProduct) {
