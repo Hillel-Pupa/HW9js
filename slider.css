@@ -1,0 +1,37 @@
+img {
+  width: 400px;
+}
+
+.slider {
+  align-items: center;
+}
+
+.wrapper {
+  overflow: hidden;
+  width: 400px;
+}
+
+.container {
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.row-direction {
+  display: flex;
+  flex-direction: row;
+}
+
+#btn-next,
+#btn-prev {
+  border: none;
+  background-color: rgba(128, 128, 128, 0.39);
+  transition: all 200ms ease;
+  width: 120px;
+  height: 200px;
+  margin: 0 20px;
+}
+
+#btn-next:hover,
+#btn-prev:hover {
+  transform: scale(1.3);
+}
