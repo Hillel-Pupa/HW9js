@@ -29,10 +29,10 @@ const imageWidth = 400;
 btnNext.addEventListener("click", () => {
   currentImageIndex++;
   if (currentImageIndex === imageCount - 1) {
-    btnNext.style.visibility = "hidden";
+    btnNext.hidden = true;
   }
   if (currentImageIndex > 0) {
-    btnPrev.style.visibility = "visible";
+    btnPrev.hidden = false;
   }
   wrapper.scrollLeft = currentImageIndex * imageWidth;
 });
@@ -40,10 +40,10 @@ btnNext.addEventListener("click", () => {
 btnPrev.addEventListener("click", () => {
   currentImageIndex--;
   if (currentImageIndex !== imageCount - 1) {
-    btnNext.style.visibility = "visible";
+    btnNext.hidden = false;
   }
   if (currentImageIndex === 0) {
-    btnPrev.style.visibility = "hidden";
+    btnPrev.hidden = true;
   }
   wrapper.scrollLeft = currentImageIndex * imageWidth;
 });
