@@ -10,24 +10,42 @@
   </head>
   <body>
     <header>
-      <h2>Jewerly Shop</h2>
-      <button class="cart">Cart</button>
+      <h2>💍Jewerly Shop💎</h2>
+      <button class="cart">
+        <img src="/icons/shopping_bag_black_24dp.svg" alt="" />
+      </button>
+      <button class="orders">
+        <img src="/icons/toc_black_24dp.svg" alt="" />
+      </button>
     </header>
     <main>
-      <nav>
-        <ul class="categories-list"></ul>
-      </nav>
-      <nav>
-        <ul class="products-list"></ul>
-      </nav>
-      <section class="product"></section>
+      <div class="shop">
+        <nav>
+          <ul class="categories-list"></ul>
+        </nav>
+        <nav>
+          <ul class="products-list"></ul>
+        </nav>
+        <section class="product"></section>
+      </div>
       <div hidden class="overlay">
-        <form class="main-form" name="main-form">
-          <p><input type="text" name="firstname" placeholder="Имя" /></p>
-          <p><input type="text" name="surname" placeholder="Фамилия" /></p>
-          <p><input type="text" name="father-name" placeholder="Отчество" /></p>
+        <form autocomplete="off" action="" class="main-form" name="main-form">
           <p>
-            <select name="city">
+            <input required type="text" name="firstname" placeholder="Имя" />
+          </p>
+          <p>
+            <input required type="text" name="surname" placeholder="Фамилия" />
+          </p>
+          <p>
+            <input
+              required
+              type="text"
+              name="father-name"
+              placeholder="Отчество"
+            />
+          </p>
+          <p>
+            <select required name="city">
               <option disabled selected>Выберете ваш город</option>
               <option value="Kiev">Kiev</option>
               <option value="Odessa">Odessa</option>
@@ -35,19 +53,31 @@
             </select>
           </p>
           <p>
-            <select name="post">
+            <select required name="post">
               <option selected disabled>Выберете отделение новой почты</option>
-              <option value="1">Nr. 95</option>
-              <option value="2">Nr. 34</option>
-              <option value="3">Nr. 5</option>
+              <option value="95">Nr. 95</option>
+              <option value="34">Nr. 34</option>
+              <option value="5">Nr. 5</option>
             </select>
           </p>
           <p>Выберете способ оплаты:</p>
-          <p><input type="radio" name="card" />Карта</p>
-          <p><input type="radio" name="cod" />Наложенный платеж</p>
           <p>
-            <input type="number" name="count" placeholder="Количество товара" />
+            <input
+              required
+              type="radio"
+              name="payment-type"
+              value="card"
+            />Карта
           </p>
+          <p>
+            <input
+              required
+              type="radio"
+              name="payment-type"
+              value="cod"
+            />Наложенный платеж
+          </p>
+
           <p>
             <input
               type="text"
@@ -55,18 +85,37 @@
               placeholder="Комментарий к заказу"
             />
           </p>
-          <button class="btn-order">Order</button>
+          <button type="submit" class="btn-order">Order</button>
         </form>
       </div>
       <div hidden class="order-card">
         <div>Данные о заказе:</div>
         <p>Доставка в город:<span class="ship-to-city"></span></p>
-        <div class="post-number"></div>
-        <div class="order-count"></div>
-        <div class="order-sum"></div>
+        <p class="post-number"></p>
+        <p class="order-sum"></p>
+        <button class="place-order">place order</button>
       </div>
       <div class="order-list"></div>
+      <div class="all-orders-list"></div>
     </main>
+    <template id="order-template">
+      <details class="order">
+        <summary>
+          Order №<span class="order-number"></span>
+          <span class="delete-item"></span>
+          <!-- total:<span class="order-total"></span> -->
+        </summary>
+
+        <div class="order-item-list"></div>
+      </details>
+    </template>
+    <template id="order-item-template">
+      <div class="order-item">
+        <div class="item-name">100 count</div>
+        <div class="item-count">12 $</div>
+        <div class="item-price">name</div>
+      </div>
+    </template>
     <footer></footer>
   </body>
 </html>

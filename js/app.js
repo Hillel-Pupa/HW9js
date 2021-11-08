@@ -9,6 +9,9 @@ const orderBtn = mainForm.querySelector(".btn-order");
 const orderCard = document.querySelector(".order-card");
 const cartBtn = document.querySelector(".cart");
 const orderList = document.querySelector(".order-list");
+const buyBtn = document.createElement("button");
+const placeOrderBtn = document.querySelector(".place-order");
+const ordersListBtn = document.querySelector(".orders");
 console.log(productsObj);
 mainForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -69,9 +72,9 @@ function selectProduct(selectedCategory, productId) {
   price.textContent = `price:${selectedProduct.price}$`;
   description.textContent = `count:${selectedProduct.count}`;
   const btn = document.createElement("button");
-  btn.textContent = "Buy";
+  btn.textContent = "add to cart";
   btn.addEventListener("click", () => {
-    addToCart(selectedProduct, count.value, selectedCategory);
+    addToCart(selectedProduct, count.value);
   });
   //   addToCart(selectedProduct, +count.value);
   // });
@@ -84,23 +87,20 @@ function getOrders() {
   // достаем текущий заказ, парсим его
   let orders = JSON.parse(localStorage.getItem("orders"));
   // если нет ордеров то тогда инициализируем их
-  if (!orders) {
+  if (!orders || orders.length === 0) {
     orders = [[]];
   }
   return orders;
 }
-// function buyProduct() {
-//   alert("Order completed");
-//   location.reload();
-// }
-function addToCart(selectedProduct, count, selectedCategory) {
+
+function addToCart(selectedProduct, count) {
   // записываем в переменную последний заказ по индексу
   let orders = getOrders();
   let currentOrder = orders[orders.length - 1];
   let orderItem = {
     name: selectedProduct.name,
     count: count,
-    category: selectedCategory,
+    price: selectedProduct.price,
   };
   // пушим продукт в заказ
   currentOrder.push(orderItem);
@@ -108,24 +108,51 @@ function addToCart(selectedProduct, count, selectedCategory) {
 }
 
 function showOrder() {
+  document.querySelector(".shop").innerHTML = "";
+  orderCard.hidden = true;
   let orders = getOrders();
   let currentOrder = orders[orders.length - 1];
+  orderList.innerHTML = "";
 
-  for (let index = 0; index < currentOrder.length; index++) {
-    let item = currentOrder[index];
-    const productName = document.createElement("h6");
-    orderList.appendChild(productName);
-    productName.textContent = item.name;
-    const productCount = document.createElement("p");
-    orderList.appendChild(productCount);
-    productCount.textContent = "count:" + item.count;
-    const productPrice = document.createElement("p");
-    orderList.appendChild(productPrice);
+  function deleteItem(index) {
+    currentOrder.splice(index, 1);
+    renderOrderList();
+    localStorage.setItem("orders", JSON.stringify(orders));
   }
+
+  function renderOrderList() {
+    document.querySelector(".all-orders-list").innerHTML = "";
+    orderList.innerHTML = "";
+    for (let index = 0; index < currentOrder.length; index++) {
+      let item = currentOrder[index];
+      let orderProductCard = document.createElement("div");
+      orderProductCard.classList.add("order-product");
+      orderList.appendChild(orderProductCard);
+      const btnDeleteItem = document.createElement("span");
+      btnDeleteItem.classList.add("delete-item");
+      orderProductCard.appendChild(btnDeleteItem);
+      btnDeleteItem.addEventListener("click", () => deleteItem(index));
+      const productName = document.createElement("h4");
+      orderProductCard.appendChild(productName);
+      productName.textContent = item.name;
+      const productCount = document.createElement("p");
+      orderProductCard.appendChild(productCount);
+      productCount.textContent = "count:" + item.count;
+      const productPrice = document.createElement("p");
+      orderProductCard.appendChild(productPrice);
+      const orderdProductsPrice = item.price * item.count;
+      productPrice.textContent = "price:" + orderdProductsPrice;
+      orderList.appendChild(buyBtn);
+      buyBtn.classList.add("order-buy");
+      buyBtn.textContent = "order";
+    }
+  }
+  renderOrderList();
 }
-// вывести заказ
 
 cartBtn.addEventListener("click", showOrder);
+
+buyBtn.addEventListener("click", showForm);
 function showForm() {
   overlay.hidden = false;
 }
@@ -133,15 +160,75 @@ function showForm() {
 orderBtn.addEventListener("click", showFilledForm);
 
 function showFilledForm(selectedProduct) {
+  if (!mainForm.checkValidity()) {
+    return;
+  }
+  orderList.innerHTML = "";
   overlay.hidden = true;
   orderCard.hidden = false;
   orderCard.querySelector(".ship-to-city").textContent =
     mainForm.elements.city.value;
-  document.body.append(
-    `Отделение новой почты: ${mainForm.elements.post.value}`
-  );
-  document.body.append(`Количество товара: ${mainForm.elements.count.value}`);
-  document.body.append(
-    `Сумма заказа: ${selectedProduct.price * mainForm.elements.count.value}`
-  );
+  orderCard.querySelector(
+    ".post-number"
+  ).textContent = `Отделение новой почты: Nr.${mainForm.elements.post.value}`;
+  let orders = getOrders();
+  let currentOrder = orders[orders.length - 1];
+  let totalSum = 0;
+  for (let index = 0; index < currentOrder.length; index++) {
+    let item = currentOrder[index];
+    const orderdProductsPrice = item.price * item.count;
+    totalSum += orderdProductsPrice;
+  }
+  orderCard.querySelector(
+    ".order-sum"
+  ).textContent = `Сумма заказа: ${totalSum}`;
+}
+
+placeOrderBtn.addEventListener("click", placeOrder);
+
+function placeOrder() {
+  let orders = getOrders();
+  orders.push([]);
+  localStorage.setItem("orders", JSON.stringify(orders));
+  location.reload();
+}
+
+ordersListBtn.addEventListener("click", showAllOrders);
+
+function showAllOrders() {
+  document.querySelector(".order-list").innerHTML = "";
+  document.querySelector(".shop").innerHTML = "";
+  const orderItemTemplate = document.querySelector("#order-item-template");
+  const orderTmpl = document.querySelector("#order-template");
+  const allOrdersList = document.querySelector(".all-orders-list");
+  allOrdersList.textContent = "";
+  let orders = getOrders();
+
+  orders.forEach((order, index) => {
+    const orderFragment = orderTmpl.content.cloneNode(true);
+    orderFragment.querySelector(".order-number").textContent = index + 1;
+    const btnDeleteItem = orderFragment.querySelector(".delete-item");
+    btnDeleteItem.addEventListener("click", () => deleteOrder(index));
+
+    // orderFragment.querySelector(".order-total").textContent = "-";
+
+    const orderItemList = orderFragment.querySelector(".order-item-list");
+
+    order.forEach((item) => {
+      const itemTemplateFragment = orderItemTemplate.content.cloneNode(true);
+      itemTemplateFragment.querySelector(".item-name").textContent = item.name;
+      itemTemplateFragment.querySelector(".item-count").textContent =
+        item.count;
+      itemTemplateFragment.querySelector(".item-price").textContent =
+        item.price;
+      orderItemList.appendChild(itemTemplateFragment);
+    });
+    allOrdersList.appendChild(orderFragment);
+  });
+
+  function deleteOrder(index) {
+    orders.splice(index, 1);
+    localStorage.setItem("orders", JSON.stringify(orders));
+    showAllOrders();
+  }
 }

@@ -12,9 +12,13 @@ header {
   align-items: center;
 }
 
-img {
+.product img {
   height: 200px;
   width: 200px;
+}
+
+.orders {
+  padding: 11px 28px;
 }
 
 a {
@@ -46,6 +50,11 @@ li:hover {
 }
 
 main {
+  display: flex;
+  flex-direction: row;
+}
+
+.shop {
   display: flex;
   flex-direction: row;
 }
@@ -86,10 +95,58 @@ button:hover {
   background-color: #abb6f0c7;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .cart {
   height: 50px;
   width: 100px;
   padding: 0;
+}
+
+h4 {
+  margin: 0;
+}
+
+.order-product > p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.order-product {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 25px;
+  margin: 15px 0;
+  position: relative;
+}
+
+.delete-item {
+  position: absolute;
+  right: 32px;
+  top: 4px;
+  height: 32px;
+  opacity: 0.3;
+}
+.delete-item:hover {
+  opacity: 1;
+}
+.delete-item:before,
+.delete-item:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 20px;
+  width: 2px;
+  background-color: #333;
+}
+.delete-item:before {
+  transform: rotate(45deg);
+}
+.delete-item:after {
+  transform: rotate(-45deg);
+}
+
+summary {
+  position: relative;
 }
