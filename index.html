@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link media="all" rel="stylesheet" href="style.css" />
     <title>Document</title>
-    <script type="module" async src="js/app.js"></script>
+    <script type="module" defer src="js/app.js"></script>
   </head>
   <body>
-    <header><h2>Jewerly Shop</h2></header>
+    <header>
+      <h2>Jewerly Shop</h2>
+      <button class="cart">Cart</button>
+    </header>
     <main>
       <nav>
         <ul class="categories-list"></ul>
@@ -18,6 +21,51 @@
         <ul class="products-list"></ul>
       </nav>
       <section class="product"></section>
+      <div hidden class="overlay">
+        <form class="main-form" name="main-form">
+          <p><input type="text" name="firstname" placeholder="Имя" /></p>
+          <p><input type="text" name="surname" placeholder="Фамилия" /></p>
+          <p><input type="text" name="father-name" placeholder="Отчество" /></p>
+          <p>
+            <select name="city">
+              <option disabled selected>Выберете ваш город</option>
+              <option value="Kiev">Kiev</option>
+              <option value="Odessa">Odessa</option>
+              <option value="Kharkiv">Kharkiv</option>
+            </select>
+          </p>
+          <p>
+            <select name="post">
+              <option selected disabled>Выберете отделение новой почты</option>
+              <option value="1">Nr. 95</option>
+              <option value="2">Nr. 34</option>
+              <option value="3">Nr. 5</option>
+            </select>
+          </p>
+          <p>Выберете способ оплаты:</p>
+          <p><input type="radio" name="card" />Карта</p>
+          <p><input type="radio" name="cod" />Наложенный платеж</p>
+          <p>
+            <input type="number" name="count" placeholder="Количество товара" />
+          </p>
+          <p>
+            <input
+              type="text"
+              name="comment"
+              placeholder="Комментарий к заказу"
+            />
+          </p>
+          <button class="btn-order">Order</button>
+        </form>
+      </div>
+      <div hidden class="order-card">
+        <div>Данные о заказе:</div>
+        <p>Доставка в город:<span class="ship-to-city"></span></p>
+        <div class="post-number"></div>
+        <div class="order-count"></div>
+        <div class="order-sum"></div>
+      </div>
+      <div class="order-list"></div>
     </main>
     <footer></footer>
   </body>

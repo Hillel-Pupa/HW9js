@@ -4,5 +4,20 @@ import { necklaces } from "./categories/necklaces.js";
 import { earrings } from "./categories/earrings.js";
 import { bracelets } from "./categories/bracelets.js";
 
-export const products = { rings, necklaces, earrings, bracelets };
-export let productCategories = Object.keys(products);
+export const productsObj = {
+  //полная запись
+  rings: rings,
+  necklaces: necklaces,
+  //сокращенная запись
+  earrings,
+  bracelets,
+};
+export let productCategories = Object.keys(productsObj);
+// [
+//     "rings",
+//     "necklaces",
+//     "earrings",
+//     "bracelets"
+//
+
+window.productsObj = productsObj;
