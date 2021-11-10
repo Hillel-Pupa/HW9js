@@ -150,3 +150,7 @@ h4 {
 summary {
   position: relative;
 }
+
+.delete-item-order-list {
+  right: 0;
+}

@@ -67,6 +67,8 @@ function selectProduct(selectedCategory, productId) {
   const description = document.createElement("p");
   const count = document.createElement("input");
   count.value = 1;
+  count.min = 1;
+  count.max = selectedProduct.count;
   count.type = "number";
   const price = document.createElement("p");
   price.textContent = `price:${selectedProduct.price}$`;
