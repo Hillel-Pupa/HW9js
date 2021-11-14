@@ -34,27 +34,24 @@
             <input required type="text" name="firstname" placeholder="Имя" />
           </p>
           <p>
-            <input required type="text" name="surname" placeholder="Фамилия" />
+            <input required type="text" name="lastname" placeholder="Фамилия" />
           </p>
           <p>
-            <input
-              required
-              type="text"
-              name="father-name"
-              placeholder="Отчество"
-            />
+            <input required type="text" name="surname" placeholder="Отчество" />
           </p>
           <p>
-            <select required name="city">
-              <option disabled selected>Выберете ваш город</option>
+            <select name="city">
+              <option value="" disabled selected>Выберете ваш город</option>
               <option value="Kiev">Kiev</option>
               <option value="Odessa">Odessa</option>
               <option value="Kharkiv">Kharkiv</option>
             </select>
           </p>
           <p>
-            <select required name="post">
-              <option selected disabled>Выберете отделение новой почты</option>
+            <select name="post">
+              <option value="" selected disabled>
+                Выберете отделение новой почты
+              </option>
               <option value="95">Nr. 95</option>
               <option value="34">Nr. 34</option>
               <option value="5">Nr. 5</option>
@@ -62,20 +59,11 @@
           </p>
           <p>Выберете способ оплаты:</p>
           <p>
-            <input
-              required
-              type="radio"
-              name="payment-type"
-              value="card"
-            />Карта
+            <input checked type="radio" name="payment-type" value="card" />Карта
           </p>
           <p>
-            <input
-              required
-              type="radio"
-              name="payment-type"
-              value="cod"
-            />Наложенный платеж
+            <input type="radio" name="payment-type" value="cod" />Наложенный
+            платеж
           </p>
 
           <p>
@@ -85,6 +73,7 @@
               placeholder="Комментарий к заказу"
             />
           </p>
+          <p class="error"></p>
           <button type="submit" class="btn-order">Order</button>
         </form>
       </div>

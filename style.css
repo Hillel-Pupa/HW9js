@@ -154,3 +154,7 @@ summary {
 .delete-item-order-list {
   right: 0;
 }
+
+.error {
+  color: red;
+}

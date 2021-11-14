@@ -12,6 +12,7 @@ const orderList = document.querySelector(".order-list");
 const buyBtn = document.createElement("button");
 const placeOrderBtn = document.querySelector(".place-order");
 const ordersListBtn = document.querySelector(".orders");
+const error = document.querySelector(".error");
 console.log(productsObj);
 mainForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -160,11 +161,42 @@ function showForm() {
 }
 
 orderBtn.addEventListener("click", showFilledForm);
+console.dir(mainForm);
 
 function showFilledForm(selectedProduct) {
-  if (!mainForm.checkValidity()) {
+  // if (!mainForm.checkValidity()) {
+  //   return;
+  // }
+  const pattern = /^[A-Z][a-z]+$/;
+  let formData = new FormData(mainForm);
+  let formDataObj = Object.fromEntries(formData);
+  console.log(formDataObj);
+
+  if (!formDataObj.city) {
+    error.textContent = "Выберите город";
     return;
   }
+
+  if (!formDataObj.post) {
+    error.textContent = "Выберите почтовое отделение";
+    return;
+  }
+
+  if (!pattern.test(formDataObj.firstname)) {
+    error.textContent = "Введите имя";
+    return;
+  }
+
+  if (!pattern.test(formDataObj.lastname)) {
+    error.textContent = "Введите фамилию";
+    return;
+  }
+
+  if (!pattern.test(formDataObj.surname)) {
+    error.textContent = "Введите отчество";
+    return;
+  }
+
   orderList.innerHTML = "";
   overlay.hidden = true;
   orderCard.hidden = false;
